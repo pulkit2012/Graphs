@@ -36,6 +36,37 @@ public class DFS {
         }
         return count;
     }
+    // or another method
+    static LinkedList<Integer> adjList[];
+    static boolean visited[];
+    static void Graph(int vertices){
+        adjList = new LinkedList[vertices];
+        visited = new boolean[vertices];
+        for (int i = 0; i < vertices; i++) {
+            adjList[i] = new LinkedList<>();
+        }
+    }
+    static void addEdge(int src, int dest){
+        adjList[src].add(dest);
+    }
+    static void DFS2(int vertex){
+        visited[vertex] = true;
+        System.out.print(vertex + " ");
+        Iterator<Integer> ite = adjList[vertex].listIterator();
+        while (ite.hasNext()){
+            int adj = ite.next();
+            if(!visited[adj]){
+                DFS2(adj);
+            }
+        }
+        //For unconnected edge
+        for (int i = 0; i < adjList.length; i++) {
+            if(!visited[i]){
+                DFS2(i);
+            }
+        }
+    }
+
 
     public static void main(String[] args) {
         int numNodes = 5;
@@ -48,6 +79,14 @@ public class DFS {
         addDirectedEdge(graph, 2, 2, 10);
         long nodeCount = DFS(0,new boolean[numNodes],graph);
         System.out.println(nodeCount);
+        Graph(4);
+        addEdge(0,1);
+        addEdge(0,2);
+        addEdge(1,2);
+        addEdge(2,0);
+        addEdge(3,3);
+        System.out.println("Traversal ");
+        DFS2(0);
 
     }
 }
